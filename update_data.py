@@ -8,7 +8,8 @@ Roda localmente todos os dias (via Windows Task Scheduler).
 5. Faz commit + push para o GitHub (o site em Streamlit Cloud lê direto do repo)
 """
 
-import subprocess
+import base64
+import os
 import sys
 import time
 from datetime import date, datetime, timedelta
@@ -24,8 +25,16 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # Configuração
 # ---------------------------------------------------------------------------
 
-REPO_DIR = Path(__file__).resolve().parent          # pasta do repo git local
+REPO_DIR = Path(__file__).resolve().parent          # pasta local do script
 DATA_FILE = REPO_DIR / "data" / "clima_portugal.csv"
+
+# --- Envio para o GitHub via API (não precisa do programa "git" instalado) ---
+GITHUB_OWNER = "luizfernandofzhub"
+GITHUB_REPO = "ooh"
+GITHUB_BRANCH = "main"
+GITHUB_PATH = "data/clima_portugal.csv"  # caminho do ficheiro DENTRO do repositório
+# Token lido de uma variável de ambiente (nunca cole o token direto no código)
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 
 CIDADES = {
     "Faro": {"lat": 37.0194, "lon": -7.9304},
@@ -126,12 +135,39 @@ def baixar_cidade(cidade, coords, data_inicio, data_fim):
     return pd.DataFrame(linhas)
 
 
-def git(*args):
-    """Corre um comando git dentro do repo e devolve (ok, output)."""
-    result = subprocess.run(
-        ["git", *args], cwd=REPO_DIR, capture_output=True, text=True
-    )
-    return result.returncode == 0, (result.stdout + result.stderr).strip()
+def push_para_github(caminho_local: Path):
+    """Envia o CSV atualizado direto para o GitHub via API REST (sem precisar do git.exe)."""
+    if not GITHUB_TOKEN:
+        print("ERRO: variável de ambiente GITHUB_TOKEN não definida. Veja as instruções de configuração.")
+        sys.exit(1)
+
+    url = f"https://api.github.com/repos/{GITHUB_OWNER}/{GITHUB_REPO}/contents/{GITHUB_PATH}"
+    headers = {
+        "Authorization": f"Bearer {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github+json",
+    }
+
+    # Precisa do sha do ficheiro atual (se já existir) para poder atualizá-lo
+    r = requests.get(url, headers=headers, params={"ref": GITHUB_BRANCH}, verify=False, timeout=30)
+    sha_atual = r.json().get("sha") if r.status_code == 200 else None
+
+    with open(caminho_local, "rb") as f:
+        conteudo_b64 = base64.b64encode(f.read()).decode("utf-8")
+
+    payload = {
+        "message": f"Atualização de dados: {datetime.now():%Y-%m-%d %H:%M}",
+        "content": conteudo_b64,
+        "branch": GITHUB_BRANCH,
+    }
+    if sha_atual:
+        payload["sha"] = sha_atual
+
+    resp = requests.put(url, headers=headers, json=payload, verify=False, timeout=60)
+    if resp.status_code in (200, 201):
+        print("Push feito com sucesso via API do GitHub. O site vai atualizar automaticamente.")
+    else:
+        print(f"Erro ao enviar para o GitHub ({resp.status_code}): {resp.text}")
+        sys.exit(1)
 
 
 def main():
@@ -177,24 +213,8 @@ def main():
     df_final.to_csv(DATA_FILE, index=False)
     print(f"\nGuardado: {DATA_FILE} ({len(df_final)} linhas totais, +{len(df_novo)} novas).")
 
-    # --- commit + push ---
-    ok, out = git("add", str(DATA_FILE.relative_to(REPO_DIR)))
-    if not ok:
-        print("git add falhou:", out)
-        sys.exit(1)
-
-    msg = f"Atualização de dados: {datetime.now().strftime('%Y-%m-%d %H:%M')}"
-    ok, out = git("commit", "-m", msg)
-    if not ok:
-        # nada para commitar não é erro fatal
-        print("git commit:", out)
-        return
-
-    ok, out = git("push")
-    if not ok:
-        print("git push falhou:", out)
-        sys.exit(1)
-    print("Push feito com sucesso. O site vai atualizar automaticamente.")
+    # --- envio para o GitHub (via API, sem precisar do git.exe) ---
+    push_para_github(DATA_FILE)
 
 
 if __name__ == "__main__":
