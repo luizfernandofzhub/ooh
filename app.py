@@ -2,28 +2,20 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
+from data_loader import DATA_FILE, carregar_dados
+
 st.set_page_config(page_title="Clima Portugal", page_icon="🌦️", layout="wide")
 
-DATA_FILE = "data/clima_portugal.csv"
-
-ESTACAO = {
-    12: "Inverno", 1: "Inverno", 2: "Inverno",
-    3: "Primavera", 4: "Primavera", 5: "Primavera",
-    6: "Verão", 7: "Verão", 8: "Verão",
-    9: "Outono", 10: "Outono", 11: "Outono",
-}
-
-
-@st.cache_data(ttl=3600)
-def carregar_dados():
-    df = pd.read_csv(DATA_FILE, parse_dates=["Data"])
-    df["Ano"] = df["Data"].dt.year
-    df["Mes"] = df["Data"].dt.month
-    df["Estação"] = df["Mes"].map(ESTACAO)
-    return df
-
-
-df = carregar_dados()
+try:
+    df = carregar_dados()
+except FileNotFoundError:
+    st.title("🌦️ Clima em Portugal")
+    st.warning(
+        f"Ainda não há dados em `{DATA_FILE}`. "
+        "Rode `python update_data.py` localmente para gerar o CSV e enviá-lo ao GitHub "
+        "(isso faz o commit + push automaticamente). O site atualiza sozinho assim que o push chegar."
+    )
+    st.stop()
 
 st.title("🌦️ Clima em Portugal")
 st.caption(f"Dados diários de {df['Data'].min():%d/%m/%Y} a {df['Data'].max():%d/%m/%Y} · atualizado automaticamente")
@@ -68,8 +60,9 @@ st.divider()
 # ---------------------------------------------------------------------------
 # Aba 1: Resumo por cidade (equivalente à aba "Resumo por Cidade" do Excel)
 # ---------------------------------------------------------------------------
-tab_resumo, tab_evolucao, tab_precip, tab_dados = st.tabs(
-    ["📊 Resumo por cidade", "📈 Evolução de temperatura", "🌧️ Precipitação", "📋 Dados"]
+tab_resumo, tab_evolucao, tab_precip, tab_fds, tab_dados = st.tabs(
+    ["📊 Resumo por cidade", "📈 Evolução de temperatura", "🌧️ Precipitação",
+     "🗓️ Comparar fins de semana", "📋 Dados"]
 )
 
 with tab_resumo:
@@ -138,7 +131,48 @@ with tab_precip:
     st.plotly_chart(fig2, use_container_width=True)
 
 # ---------------------------------------------------------------------------
-# Aba 4: Dados brutos
+# Aba 4: Comparar o mesmo nº de fim de semana entre anos
+# ---------------------------------------------------------------------------
+with tab_fds:
+    df_fds = df_f[df_f["FDS"] == "Fim de Semana"].dropna(subset=["Wknd Code"])
+    if df_fds.empty:
+        st.info("Sem dias de fim de semana no período/cidades selecionados.")
+    else:
+        max_wknd = int(df_fds["Wknd Code"].max())
+        numero_fds = st.slider("Nº do fim de semana no ano", 1, max_wknd, min(3, max_wknd))
+
+        selecionado = df_fds[df_fds["Wknd Code"] == numero_fds]
+        st.caption(f"Comparando o **{numero_fds}º fim de semana** de cada ano, entre cidades.")
+
+        resumo_fds = (
+            selecionado.groupby(["Ano", "Cidade"])
+            .agg(
+                Temp_Media=("Temp. Média (°C)", "mean"),
+                Temp_Max=("Temp. Máxima (°C)", "max"),
+                Temp_Min=("Temp. Mínima (°C)", "min"),
+                Precipitacao=("Precipitação (mm)", "sum"),
+            )
+            .round(1)
+            .reset_index()
+        )
+        st.dataframe(resumo_fds, use_container_width=True, hide_index=True)
+
+        fig = px.bar(
+            resumo_fds, x="Ano", y="Temp_Media", color="Cidade", barmode="group",
+            title=f"Temperatura média — {numero_fds}º fim de semana do ano, por cidade",
+            labels={"Temp_Media": "Temp. média (°C)"},
+        )
+        st.plotly_chart(fig, use_container_width=True)
+
+        with st.expander("Ver os dias exatos incluídos"):
+            st.dataframe(
+                selecionado[["Cidade", "Data", "Dia da Semana", "Ano", "Wknd Code",
+                             "Temp. Média (°C)", "Precipitação (mm)"]].sort_values(["Ano", "Data"]),
+                use_container_width=True, hide_index=True,
+            )
+
+# ---------------------------------------------------------------------------
+# Aba 5: Dados brutos
 # ---------------------------------------------------------------------------
 with tab_dados:
     st.dataframe(
