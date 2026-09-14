@@ -4,10 +4,12 @@ Página Streamlit: População e Turismo (INE) — nível Distrito.
 Deve ficar em `pages/2_Populacao_e_Turismo.py` no repositório "ooh", ao
 lado do `app.py` principal.
 
-Espera encontrar estes 3 CSVs dentro da pasta `data/` no repositório
-(Dormidas e Dormidas-por-Origem deixaram de ser usados nesta página):
+Espera encontrar estes 4 CSVs dentro da pasta `data/` no repositório
+(Dormidas não tem aba própria, mas é usada no cálculo de "dias por
+estadia" da aba Período de Hospedagem; Dormidas-por-Origem não é usada):
   data/populacao_residente_distrito_nativo_anual.csv   (Distrito, Anual, 2020-2025)
   data/turismo_hospedes_distrito_mensal.csv             (Distrito, Mensal, 2020-2026)
+  data/turismo_dormidas_distrito_mensal.csv             (Distrito, Mensal, 2020-2026)
   data/turismo_hospedes_origem_distrito_anual.csv       (Distrito, Anual, 2020-2025, por país)
 """
 
@@ -25,6 +27,7 @@ DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 ARQUIVOS = {
     "populacao": "populacao_residente_distrito_nativo_anual.csv",
     "hospedes": "turismo_hospedes_distrito_mensal.csv",
+    "dormidas": "turismo_dormidas_distrito_mensal.csv",
     "hospedes_origem": "turismo_hospedes_origem_distrito_anual.csv",
 }
 
@@ -144,7 +147,7 @@ def grafico_mensal(df: pd.DataFrame, titulo_eixo_y: str, chave: str):
         return
 
     modo = st.radio(
-        "Visualização", ["Série temporal", "Sazonalidade (mês × ano)"],
+        "Visualização", ["Série temporal", "Sazonalidade (mês × ano)", "Anual"],
         horizontal=True, key=f"modo_{chave}",
     )
 
@@ -160,7 +163,8 @@ def grafico_mensal(df: pd.DataFrame, titulo_eixo_y: str, chave: str):
             labels={"valor": titulo_eixo_y, "data": "Mês", "distrito": "Distrito"},
         )
         fig.update_layout(legend_title_text="Distrito", height=500)
-    else:
+        tabela = df[["ano", "mes", "distrito", "valor"]].sort_values(["ano", "mes", "distrito"])
+    elif modo == "Sazonalidade (mês × ano)":
         resumo = df.groupby(["ano", "mes"], as_index=False)["valor"].sum()
         resumo["mes_nome"] = resumo["mes"].map(NOMES_MES)
         resumo["ano"] = resumo["ano"].astype(int).astype(str)
@@ -172,11 +176,20 @@ def grafico_mensal(df: pd.DataFrame, titulo_eixo_y: str, chave: str):
         fig.update_layout(legend_title_text="Ano", height=500)
         if not distritos_sel:
             st.caption("A somar todos os distritos (nenhum filtro de distrito aplicado).")
+        tabela = df[["ano", "mes", "distrito", "valor"]].sort_values(["ano", "mes", "distrito"])
+    else:  # Anual
+        aviso_muitos_distritos(df)
+        resumo = df.groupby(["ano", "distrito"], as_index=False)["valor"].sum().sort_values("ano")
+        fig = px.line(
+            resumo, x="ano", y="valor", color="distrito", markers=True,
+            labels={"valor": titulo_eixo_y, "ano": "Ano", "distrito": "Distrito"},
+        )
+        fig.update_layout(legend_title_text="Distrito", height=500)
+        tabela = resumo[["ano", "distrito", "valor"]].sort_values(["ano", "distrito"])
 
     st.plotly_chart(fig, use_container_width=True, key=f"chart_{chave}")
 
     with st.expander("Ver tabela de dados"):
-        tabela = df[["ano", "mes", "distrito", "valor"]].sort_values(["ano", "mes", "distrito"])
         st.dataframe(tabela, use_container_width=True, hide_index=True)
         st.download_button(
             "⬇️ Descarregar CSV filtrado",
@@ -191,11 +204,12 @@ def grafico_mensal(df: pd.DataFrame, titulo_eixo_y: str, chave: str):
 # Abas
 # ---------------------------------------------------------------------------
 
-aba_idade, aba_pop, aba_hosp, aba_hosp_o, aba_cruzamento = st.tabs(
+aba_idade, aba_pop, aba_hosp, aba_periodo, aba_hosp_o, aba_cruzamento = st.tabs(
     [
         "Divisão Etária",
         "População",
         "Turismo — Hóspedes",
+        "Período de Hospedagem",
         "Hóspedes por Origem",
         "Cruzamento População × Turismo",
     ]
@@ -269,9 +283,9 @@ with aba_idade:
         ]
 
         fig_idade = px.bar(
-            faixas_final, x="distrito", y="valor", color="dim_4_t", text="rotulo",
+            faixas_final, x="distrito", y="percentual", color="dim_4_t", text="rotulo",
             category_orders={"distrito": ordem_distritos, "dim_4_t": faixas_idade_sel},
-            labels={"valor": "População (N.º)", "distrito": "Distrito", "dim_4_t": "Faixa etária"},
+            labels={"percentual": "% da população do distrito", "distrito": "Distrito", "dim_4_t": "Faixa etária"},
         )
         fig_idade.update_traces(textposition="inside", textfont_size=10)
         fig_idade.update_layout(barmode="stack", height=650, legend_title_text="Faixa etária")
@@ -300,7 +314,7 @@ with aba_pop:
     if df_pop.empty:
         st.info("Sem dados para os filtros selecionados.")
     else:
-        col_esq, col_dir = st.columns(2)
+        col_esq, col_dir = st.columns([2, 3])
 
         # --- gráfico esquerdo: barras, soma dos distritos selecionados, 1
         # barra por ano, com rótulo de % de evolução vs. ano anterior
@@ -382,6 +396,56 @@ with aba_hosp:
     df_hosp = aplicar_filtro_distrito(dados["hospedes"])
     df_hosp = filtro_ano(df_hosp, key="hosp_ano")
     grafico_mensal(df_hosp, "Hóspedes (N.º)", "hospedes")
+
+# --- Período de Hospedagem ---------------------------------------------------
+with aba_periodo:
+    st.subheader("Período médio de hospedagem (dias), por Distrito e Ano")
+    st.caption(
+        "Dormidas ÷ Hóspedes = número médio de noites por estadia. Mesma "
+        "ressalva dos concelhos confidenciais aplica-se aqui, em ambos os "
+        "indicadores."
+    )
+
+    dorm_anual = (
+        dados["dormidas"][["ano", "distrito", "valor"]]
+        .groupby(["ano", "distrito"], as_index=False)["valor"].sum()
+        .rename(columns={"valor": "dormidas"})
+    )
+    hosp_anual = (
+        dados["hospedes"][["ano", "distrito", "valor"]]
+        .groupby(["ano", "distrito"], as_index=False)["valor"].sum()
+        .rename(columns={"valor": "hospedes"})
+    )
+    periodo = dorm_anual.merge(hosp_anual, on=["ano", "distrito"], how="inner")
+    periodo = periodo[periodo["hospedes"] > 0]
+    periodo["valor"] = periodo["dormidas"] / periodo["hospedes"]
+
+    periodo_f = aplicar_filtro_distrito(periodo)
+    periodo_f = filtro_ano(periodo_f, key="periodo_ano")
+
+    if periodo_f.empty:
+        st.info("Sem dados para os filtros selecionados.")
+    else:
+        aviso_muitos_distritos(periodo_f)
+        fig_periodo = px.line(
+            periodo_f.sort_values("ano"), x="ano", y="valor", color="distrito", markers=True,
+            labels={"valor": "Dias por estadia", "ano": "Ano", "distrito": "Distrito"},
+        )
+        fig_periodo.update_layout(legend_title_text="Distrito", height=550)
+        st.plotly_chart(fig_periodo, use_container_width=True, key="chart_periodo")
+
+        with st.expander("Ver tabela de dados"):
+            tabela_periodo = periodo_f[["ano", "distrito", "dormidas", "hospedes", "valor"]].sort_values(
+                ["ano", "distrito"]
+            )
+            st.dataframe(tabela_periodo, use_container_width=True, hide_index=True)
+            st.download_button(
+                "⬇️ Descarregar CSV filtrado",
+                tabela_periodo.to_csv(index=False).encode("utf-8-sig"),
+                file_name="periodo_hospedagem_filtrado.csv",
+                mime="text/csv",
+                key="download_periodo",
+            )
 
 # --- 6. Hóspedes por Origem (ranking) ---------------------------------------
 with aba_hosp_o:
