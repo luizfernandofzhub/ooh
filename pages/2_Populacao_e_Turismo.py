@@ -161,16 +161,60 @@ def todos_valores(dfs: list, coluna: str) -> list:
 
 st.sidebar.header("Filtros (População / Hóspedes / Cruzamento)")
 geo_disponiveis = todos_valores(list(dados.values()), GEO_COL)
+
+# Chaves dos 3 seletores de geografia da página: o principal da sidebar
+# (usado por População, Turismo-Hóspedes, Período de Hospedagem e
+# Cruzamento) e os dois locais das abas Divisão Etária e Hóspedes por
+# Origem. Ao trocar de Nível Geográfico, reinicia os três para o
+# comportamento por omissão de cada nível — sem isto, uma seleção feita
+# em Distrito ficaria "presa" (e provavelmente inválida) ao mudar para
+# Concelho, porque os widgets têm 'key' fixa e passam a ignorar o
+# 'default' depois da primeira vez que são desenhados.
+CHAVES_SELETORES_GEO = ["geo_multiselect", "idade_geos", "origem_geos"]
+if st.session_state.get("_nivel_geo_anterior") != nivel_geo:
+    valor_reset = geo_disponiveis if nivel_geo == "Distrito" else []
+    for chave in CHAVES_SELETORES_GEO:
+        st.session_state[chave] = valor_reset
+    st.session_state["_nivel_geo_anterior"] = nivel_geo
+
+
+def calcular_top_n_concelhos(n: int) -> list:
+    """Rankeia os concelhos pelo total de hóspedes no período completo
+    carregado (proxy direto de 'tamanho turístico', já disponível sem
+    cálculo extra) e devolve os N primeiros. Serve de atalho para não
+    teres de escolher concelho a concelho entre ~308 opções."""
+    df_hosp = dados.get("hospedes", pd.DataFrame())
+    if df_hosp.empty or GEO_COL not in df_hosp.columns:
+        return []
+    ranking = df_hosp.groupby(GEO_COL)["valor"].sum().sort_values(ascending=False)
+    return ranking.head(n).index.tolist()
+
+
+if nivel_geo == "Concelho":
+    topn_ativo = st.sidebar.checkbox(
+        "Selecionar automaticamente os Top N concelhos (por hóspedes)", key="topn_ativo"
+    )
+    if topn_ativo:
+        topn_valor = st.sidebar.slider("N", min_value=5, max_value=50, value=15, key="topn_valor")
+        top_n_lista = calcular_top_n_concelhos(topn_valor)
+        for chave in CHAVES_SELETORES_GEO:
+            st.session_state[chave] = top_n_lista
+        st.sidebar.caption(
+            f"Top {topn_valor} concelhos por hóspedes aplicado aos filtros da página "
+            f"(barra lateral, Divisão Etária e Hóspedes por Origem). Desmarca a caixa "
+            f"para voltar a escolher à mão a partir desta lista."
+        )
+
 geo_sel = st.sidebar.multiselect(
-    f"{ROTULO_GEO} (vazio = {'todos' if nivel_geo == 'Distrito' else 'nada — escolhe pelo menos um'})",
+    f"{ROTULO_GEO} (vazio = {'todos' if nivel_geo == 'Distrito' else 'nada — escolhe pelo menos um ou usa o Top N acima'})",
     geo_disponiveis,
-    default=geo_disponiveis if nivel_geo == "Distrito" else [],
+    key="geo_multiselect",
 )
 
 if nivel_geo == "Concelho" and not geo_sel:
     st.sidebar.info(
         "Nenhum concelho selecionado — as abas que dependem deste filtro "
-        "vão pedir para escolheres pelo menos um."
+        "vão pedir para escolheres pelo menos um (ou usa o Top N acima)."
     )
 
 
@@ -336,7 +380,6 @@ with aba_idade:
     with col1:
         geos_idade_sel = st.multiselect(
             ROTULO_GEO, geos_idade_disp,
-            default=geos_idade_disp if nivel_geo == "Distrito" else [],
             key="idade_geos",
         )
     with col2:
@@ -581,7 +624,6 @@ with aba_hosp_o:
         geos_origem_disp = sorted(df_origem[GEO_COL].dropna().unique().tolist())
         geos_origem_sel = st.multiselect(
             ROTULO_GEO, geos_origem_disp,
-            default=geos_origem_disp if nivel_geo == "Distrito" else [],
             key="origem_geos",
         )
     with col2:
