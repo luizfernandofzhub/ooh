@@ -76,7 +76,8 @@ Aveiro,2026,2,70761.0
 Aveiro,2026,3,91150.0
 Aveiro,2026,4,119130.0
 Aveiro,2026,5,135266.0
-Aveiro,2026,6,137217.0
+Aveiro,2026,6,136775.0
+Aveiro,2026,7,179872.0
 Beja,2020,1,23697.0
 Beja,2020,2,33364.0
 Beja,2020,3,16742.0
@@ -154,7 +155,8 @@ Beja,2026,2,37378.0
 Beja,2026,3,55778.0
 Beja,2026,4,80970.0
 Beja,2026,5,87323.0
-Beja,2026,6,99313.0
+Beja,2026,6,99104.0
+Beja,2026,7,116592.0
 Braga,2020,1,71390.0
 Braga,2020,2,84795.0
 Braga,2020,3,34372.0
@@ -232,7 +234,8 @@ Braga,2026,2,91904.0
 Braga,2026,3,124965.0
 Braga,2026,4,162934.0
 Braga,2026,5,185653.0
-Braga,2026,6,188343.0
+Braga,2026,6,188395.0
+Braga,2026,7,230601.0
 Bragança,2020,1,12339.0
 Bragança,2020,2,18633.0
 Bragança,2020,3,6656.0
@@ -310,7 +313,8 @@ Bragança,2026,2,21140.0
 Bragança,2026,3,21045.0
 Bragança,2026,4,29755.0
 Bragança,2026,5,35116.0
-Bragança,2026,6,32965.0
+Bragança,2026,6,32606.0
+Bragança,2026,7,42006.0
 Castelo Branco,2020,1,48892.0
 Castelo Branco,2020,2,56999.0
 Castelo Branco,2020,3,22293.0
@@ -388,7 +392,8 @@ Castelo Branco,2026,2,61863.0
 Castelo Branco,2026,3,56260.0
 Castelo Branco,2026,4,62148.0
 Castelo Branco,2026,5,62078.0
-Castelo Branco,2026,6,67339.0
+Castelo Branco,2026,6,67441.0
+Castelo Branco,2026,7,77232.0
 Coimbra,2020,1,66543.0
 Coimbra,2020,2,76374.0
 Coimbra,2020,3,28428.0
@@ -466,85 +471,87 @@ Coimbra,2026,2,67864.0
 Coimbra,2026,3,93058.0
 Coimbra,2026,4,118250.0
 Coimbra,2026,5,141053.0
-Coimbra,2026,6,138842.0
-Faro,2020,1,560774.0
-Faro,2020,2,845563.0
-Faro,2020,3,508075.0
+Coimbra,2026,6,138379.0
+Coimbra,2026,7,177019.0
+Faro,2020,1,559289.0
+Faro,2020,2,843095.0
+Faro,2020,3,506620.0
 Faro,2020,4,25446.0
 Faro,2020,5,38900.0
-Faro,2020,6,331138.0
-Faro,2020,7,1003637.0
-Faro,2020,8,2096883.0
-Faro,2020,9,1421365.0
-Faro,2020,10,697279.0
-Faro,2020,11,182004.0
-Faro,2020,12,155500.0
-Faro,2021,1,105489.0
-Faro,2021,2,67788.0
-Faro,2021,3,85953.0
-Faro,2021,4,139158.0
-Faro,2021,5,501825.0
-Faro,2021,6,1186609.0
-Faro,2021,7,1558501.0
-Faro,2021,8,2772443.0
-Faro,2021,9,1877183.0
-Faro,2021,10,1592277.0
-Faro,2021,11,654860.0
-Faro,2021,12,378076.0
-Faro,2022,1,345206.0
-Faro,2022,2,587969.0
-Faro,2022,3,869678.0
-Faro,2022,4,1627551.0
-Faro,2022,5,1870794.0
-Faro,2022,6,2243826.0
-Faro,2022,7,2874173.0
-Faro,2022,8,3242574.0
-Faro,2022,9,2361303.0
-Faro,2022,10,1916621.0
-Faro,2022,11,755501.0
-Faro,2022,12,555279.0
-Faro,2023,1,548878.0
-Faro,2023,2,785301.0
-Faro,2023,3,1099744.0
-Faro,2023,4,1845136.0
-Faro,2023,5,1979229.0
-Faro,2023,6,2252660.0
-Faro,2023,7,2820485.0
-Faro,2023,8,3197441.0
-Faro,2023,9,2415094.0
-Faro,2023,10,2082910.0
-Faro,2023,11,826349.0
-Faro,2023,12,617741.0
-Faro,2024,1,567579.0
-Faro,2024,2,821958.0
-Faro,2024,3,1252187.0
-Faro,2024,4,1679513.0
-Faro,2024,5,2086127.0
-Faro,2024,6,2341033.0
-Faro,2024,7,2854622.0
-Faro,2024,8,3238393.0
-Faro,2024,9,2446994.0
-Faro,2024,10,2099691.0
-Faro,2024,11,853165.0
-Faro,2024,12,633495.0
-Faro,2025,1,571594.0
-Faro,2025,2,776038.0
-Faro,2025,3,1144879.0
-Faro,2025,4,1849828.0
-Faro,2025,5,2034121.0
-Faro,2025,6,2388393.0
-Faro,2025,7,2911519.0
-Faro,2025,8,3251701.0
-Faro,2025,9,2392191.0
-Faro,2025,10,2070316.0
-Faro,2025,11,873689.0
-Faro,2025,12,659070.0
-Faro,2026,1,561796.0
-Faro,2026,2,777796.0
-Faro,2026,3,1191191.0
-Faro,2026,4,1866483.0
-Faro,2026,5,2127177.0
-Faro,2026,6,2379257.0
+Faro,2020,6,330393.0
+Faro,2020,7,1000257.0
+Faro,2020,8,2090569.0
+Faro,2020,9,1418185.0
+Faro,2020,10,696087.0
+Faro,2020,11,180457.0
+Faro,2020,12,153212.0
+Faro,2021,1,105161.0
+Faro,2021,2,65956.0
+Faro,2021,3,83995.0
+Faro,2021,4,138049.0
+Faro,2021,5,500044.0
+Faro,2021,6,1182009.0
+Faro,2021,7,1551789.0
+Faro,2021,8,2762537.0
+Faro,2021,9,1869194.0
+Faro,2021,10,1584764.0
+Faro,2021,11,651051.0
+Faro,2021,12,376031.0
+Faro,2022,1,343900.0
+Faro,2022,2,585850.0
+Faro,2022,3,866401.0
+Faro,2022,4,1622076.0
+Faro,2022,5,1862959.0
+Faro,2022,6,2233405.0
+Faro,2022,7,2861164.0
+Faro,2022,8,3228888.0
+Faro,2022,9,2349110.0
+Faro,2022,10,1907121.0
+Faro,2022,11,749270.0
+Faro,2022,12,550489.0
+Faro,2023,1,546804.0
+Faro,2023,2,782376.0
+Faro,2023,3,1092606.0
+Faro,2023,4,1834975.0
+Faro,2023,5,1968201.0
+Faro,2023,6,2239992.0
+Faro,2023,7,2805543.0
+Faro,2023,8,3181862.0
+Faro,2023,9,2402161.0
+Faro,2023,10,2071317.0
+Faro,2023,11,819961.0
+Faro,2023,12,613640.0
+Faro,2024,1,563534.0
+Faro,2024,2,816342.0
+Faro,2024,3,1243832.0
+Faro,2024,4,1668748.0
+Faro,2024,5,2073654.0
+Faro,2024,6,2324847.0
+Faro,2024,7,2835129.0
+Faro,2024,8,3217263.0
+Faro,2024,9,2430059.0
+Faro,2024,10,2085928.0
+Faro,2024,11,846094.0
+Faro,2024,12,627850.0
+Faro,2025,1,567669.0
+Faro,2025,2,770418.0
+Faro,2025,3,1135630.0
+Faro,2025,4,1835066.0
+Faro,2025,5,2017623.0
+Faro,2025,6,2371962.0
+Faro,2025,7,2891107.0
+Faro,2025,8,3230558.0
+Faro,2025,9,2374271.0
+Faro,2025,10,2055587.0
+Faro,2025,11,866379.0
+Faro,2025,12,654819.0
+Faro,2026,1,557430.0
+Faro,2026,2,773307.0
+Faro,2026,3,1184846.0
+Faro,2026,4,1854944.0
+Faro,2026,5,2112460.0
+Faro,2026,6,2364240.0
+Faro,2026,7,2955832.0
 Guarda,2020,1,24013.0
 Guarda,2020,2,30508.0
 Guarda,2020,3,10113.0
@@ -622,7 +629,8 @@ Guarda,2026,2,35070.0
 Guarda,2026,3,30223.0
 Guarda,2026,4,36150.0
 Guarda,2026,5,40964.0
-Guarda,2026,6,37013.0
+Guarda,2026,6,37460.0
+Guarda,2026,7,46077.0
 Leiria,2020,1,60313.0
 Leiria,2020,2,82685.0
 Leiria,2020,3,29932.0
@@ -700,7 +708,8 @@ Leiria,2026,2,78712.0
 Leiria,2026,3,100481.0
 Leiria,2026,4,132010.0
 Leiria,2026,5,159655.0
-Leiria,2026,6,164202.0
+Leiria,2026,6,166052.0
+Leiria,2026,7,234426.0
 Lisboa,2020,1,1022942.0
 Lisboa,2020,2,1040207.0
 Lisboa,2020,3,476193.0
@@ -778,7 +787,8 @@ Lisboa,2026,2,1203070.0
 Lisboa,2026,3,1580429.0
 Lisboa,2026,4,1770155.0
 Lisboa,2026,5,1907706.0
-Lisboa,2026,6,1832301.0
+Lisboa,2026,6,1831742.0
+Lisboa,2026,7,1982904.0
 Portalegre,2020,1,20836.0
 Portalegre,2020,2,27441.0
 Portalegre,2020,3,13810.0
@@ -856,7 +866,8 @@ Portalegre,2026,2,22720.0
 Portalegre,2026,3,29757.0
 Portalegre,2026,4,39815.0
 Portalegre,2026,5,43965.0
-Portalegre,2026,6,47488.0
+Portalegre,2026,6,47548.0
+Portalegre,2026,7,56402.0
 Porto,2020,1,411085.0
 Porto,2020,2,413901.0
 Porto,2020,3,184051.0
@@ -934,7 +945,8 @@ Porto,2026,2,543403.0
 Porto,2026,3,773783.0
 Porto,2026,4,916198.0
 Porto,2026,5,1036029.0
-Porto,2026,6,962307.0
+Porto,2026,6,959722.0
+Porto,2026,7,1070998.0
 Região Autónoma da Madeira,2020,1,488461.0
 Região Autónoma da Madeira,2020,2,540254.0
 Região Autónoma da Madeira,2020,3,296417.0
@@ -1012,85 +1024,87 @@ Região Autónoma da Madeira,2026,2,671534.0
 Região Autónoma da Madeira,2026,3,767172.0
 Região Autónoma da Madeira,2026,4,843881.0
 Região Autónoma da Madeira,2026,5,879038.0
-Região Autónoma da Madeira,2026,6,869536.0
-Região Autónoma dos Açores,2020,1,83960.0
-Região Autónoma dos Açores,2020,2,105411.0
-Região Autónoma dos Açores,2020,3,55787.0
+Região Autónoma da Madeira,2026,6,869890.0
+Região Autónoma da Madeira,2026,7,990215.0
+Região Autónoma dos Açores,2020,1,85445.0
+Região Autónoma dos Açores,2020,2,107879.0
+Região Autónoma dos Açores,2020,3,57242.0
 Região Autónoma dos Açores,2020,4,258.0
 Região Autónoma dos Açores,2020,5,254.0
-Região Autónoma dos Açores,2020,6,7428.0
-Região Autónoma dos Açores,2020,7,40388.0
-Região Autónoma dos Açores,2020,8,101028.0
-Região Autónoma dos Açores,2020,9,83733.0
-Região Autónoma dos Açores,2020,10,70999.0
-Região Autónoma dos Açores,2020,11,38331.0
-Região Autónoma dos Açores,2020,12,26446.0
-Região Autónoma dos Açores,2021,1,22179.0
-Região Autónoma dos Açores,2021,2,21537.0
-Região Autónoma dos Açores,2021,3,38525.0
-Região Autónoma dos Açores,2021,4,53126.0
-Região Autónoma dos Açores,2021,5,73506.0
-Região Autónoma dos Açores,2021,6,131122.0
-Região Autónoma dos Açores,2021,7,204108.0
-Região Autónoma dos Açores,2021,8,279942.0
-Região Autónoma dos Açores,2021,9,223688.0
-Região Autónoma dos Açores,2021,10,179187.0
-Região Autónoma dos Açores,2021,11,103891.0
-Região Autónoma dos Açores,2021,12,66490.0
-Região Autónoma dos Açores,2022,1,58668.0
-Região Autónoma dos Açores,2022,2,80516.0
-Região Autónoma dos Açores,2022,3,130911.0
-Região Autónoma dos Açores,2022,4,181491.0
-Região Autónoma dos Açores,2022,5,219639.0
-Região Autónoma dos Açores,2022,6,274043.0
-Região Autónoma dos Açores,2022,7,332539.0
-Região Autónoma dos Açores,2022,8,354195.0
-Região Autónoma dos Açores,2022,9,283677.0
-Região Autónoma dos Açores,2022,10,226310.0
-Região Autónoma dos Açores,2022,11,117377.0
-Região Autónoma dos Açores,2022,12,93003.0
-Região Autónoma dos Açores,2023,1,90690.0
-Região Autónoma dos Açores,2023,2,102306.0
-Região Autónoma dos Açores,2023,3,156967.0
-Região Autónoma dos Açores,2023,4,212150.0
-Região Autónoma dos Açores,2023,5,243713.0
-Região Autónoma dos Açores,2023,6,296869.0
-Região Autónoma dos Açores,2023,7,358246.0
-Região Autónoma dos Açores,2023,8,391050.0
-Região Autónoma dos Açores,2023,9,317223.0
-Região Autónoma dos Açores,2023,10,234579.0
-Região Autónoma dos Açores,2023,11,125721.0
-Região Autónoma dos Açores,2023,12,89551.0
-Região Autónoma dos Açores,2024,1,85836.0
-Região Autónoma dos Açores,2024,2,114202.0
-Região Autónoma dos Açores,2024,3,173157.0
-Região Autónoma dos Açores,2024,4,227041.0
-Região Autónoma dos Açores,2024,5,290961.0
-Região Autónoma dos Açores,2024,6,327077.0
-Região Autónoma dos Açores,2024,7,390230.0
-Região Autónoma dos Açores,2024,8,427639.0
-Região Autónoma dos Açores,2024,9,348670.0
-Região Autónoma dos Açores,2024,10,259996.0
-Região Autónoma dos Açores,2024,11,147480.0
-Região Autónoma dos Açores,2024,12,92569.0
-Região Autónoma dos Açores,2025,1,96655.0
-Região Autónoma dos Açores,2025,2,119657.0
-Região Autónoma dos Açores,2025,3,184082.0
-Região Autónoma dos Açores,2025,4,255139.0
-Região Autónoma dos Açores,2025,5,303194.0
-Região Autónoma dos Açores,2025,6,330510.0
-Região Autónoma dos Açores,2025,7,404023.0
-Região Autónoma dos Açores,2025,8,435642.0
-Região Autónoma dos Açores,2025,9,343477.0
-Região Autónoma dos Açores,2025,10,254045.0
-Região Autónoma dos Açores,2025,11,139444.0
-Região Autónoma dos Açores,2025,12,89917.0
-Região Autónoma dos Açores,2026,1,88871.0
-Região Autónoma dos Açores,2026,2,116695.0
-Região Autónoma dos Açores,2026,3,183244.0
-Região Autónoma dos Açores,2026,4,237810.0
-Região Autónoma dos Açores,2026,5,307426.0
-Região Autónoma dos Açores,2026,6,329907.0
+Região Autónoma dos Açores,2020,6,8173.0
+Região Autónoma dos Açores,2020,7,43768.0
+Região Autónoma dos Açores,2020,8,107342.0
+Região Autónoma dos Açores,2020,9,86913.0
+Região Autónoma dos Açores,2020,10,72191.0
+Região Autónoma dos Açores,2020,11,39878.0
+Região Autónoma dos Açores,2020,12,28734.0
+Região Autónoma dos Açores,2021,1,22507.0
+Região Autónoma dos Açores,2021,2,23369.0
+Região Autónoma dos Açores,2021,3,40483.0
+Região Autónoma dos Açores,2021,4,54235.0
+Região Autónoma dos Açores,2021,5,75287.0
+Região Autónoma dos Açores,2021,6,135722.0
+Região Autónoma dos Açores,2021,7,210820.0
+Região Autónoma dos Açores,2021,8,289848.0
+Região Autónoma dos Açores,2021,9,231677.0
+Região Autónoma dos Açores,2021,10,186700.0
+Região Autónoma dos Açores,2021,11,107700.0
+Região Autónoma dos Açores,2021,12,68535.0
+Região Autónoma dos Açores,2022,1,59974.0
+Região Autónoma dos Açores,2022,2,82635.0
+Região Autónoma dos Açores,2022,3,134188.0
+Região Autónoma dos Açores,2022,4,186966.0
+Região Autónoma dos Açores,2022,5,227474.0
+Região Autónoma dos Açores,2022,6,284464.0
+Região Autónoma dos Açores,2022,7,345548.0
+Região Autónoma dos Açores,2022,8,367881.0
+Região Autónoma dos Açores,2022,9,295870.0
+Região Autónoma dos Açores,2022,10,235810.0
+Região Autónoma dos Açores,2022,11,123608.0
+Região Autónoma dos Açores,2022,12,97793.0
+Região Autónoma dos Açores,2023,1,92764.0
+Região Autónoma dos Açores,2023,2,105231.0
+Região Autónoma dos Açores,2023,3,164105.0
+Região Autónoma dos Açores,2023,4,222311.0
+Região Autónoma dos Açores,2023,5,254741.0
+Região Autónoma dos Açores,2023,6,309537.0
+Região Autónoma dos Açores,2023,7,373188.0
+Região Autónoma dos Açores,2023,8,406629.0
+Região Autónoma dos Açores,2023,9,330156.0
+Região Autónoma dos Açores,2023,10,246172.0
+Região Autónoma dos Açores,2023,11,132109.0
+Região Autónoma dos Açores,2023,12,93652.0
+Região Autónoma dos Açores,2024,1,89881.0
+Região Autónoma dos Açores,2024,2,119818.0
+Região Autónoma dos Açores,2024,3,181512.0
+Região Autónoma dos Açores,2024,4,237806.0
+Região Autónoma dos Açores,2024,5,303434.0
+Região Autónoma dos Açores,2024,6,343263.0
+Região Autónoma dos Açores,2024,7,409723.0
+Região Autónoma dos Açores,2024,8,448769.0
+Região Autónoma dos Açores,2024,9,365605.0
+Região Autónoma dos Açores,2024,10,273759.0
+Região Autónoma dos Açores,2024,11,154551.0
+Região Autónoma dos Açores,2024,12,98214.0
+Região Autónoma dos Açores,2025,1,100580.0
+Região Autónoma dos Açores,2025,2,125277.0
+Região Autónoma dos Açores,2025,3,193331.0
+Região Autónoma dos Açores,2025,4,269901.0
+Região Autónoma dos Açores,2025,5,319692.0
+Região Autónoma dos Açores,2025,6,346941.0
+Região Autónoma dos Açores,2025,7,424435.0
+Região Autónoma dos Açores,2025,8,456785.0
+Região Autónoma dos Açores,2025,9,361397.0
+Região Autónoma dos Açores,2025,10,268774.0
+Região Autónoma dos Açores,2025,11,146754.0
+Região Autónoma dos Açores,2025,12,94168.0
+Região Autónoma dos Açores,2026,1,93237.0
+Região Autónoma dos Açores,2026,2,121184.0
+Região Autónoma dos Açores,2026,3,189589.0
+Região Autónoma dos Açores,2026,4,249349.0
+Região Autónoma dos Açores,2026,5,322143.0
+Região Autónoma dos Açores,2026,6,345595.0
+Região Autónoma dos Açores,2026,7,417452.0
 Santarém,2020,1,56000.0
 Santarém,2020,2,70355.0
 Santarém,2020,3,30134.0
@@ -1168,7 +1182,8 @@ Santarém,2026,2,88422.0
 Santarém,2026,3,103650.0
 Santarém,2026,4,164224.0
 Santarém,2026,5,193846.0
-Santarém,2026,6,154682.0
+Santarém,2026,6,154803.0
+Santarém,2026,7,175924.0
 Setúbal,2020,1,93707.0
 Setúbal,2020,2,119155.0
 Setúbal,2020,3,51184.0
@@ -1246,7 +1261,8 @@ Setúbal,2026,2,121649.0
 Setúbal,2026,3,158981.0
 Setúbal,2026,4,211779.0
 Setúbal,2026,5,250719.0
-Setúbal,2026,6,278386.0
+Setúbal,2026,6,277193.0
+Setúbal,2026,7,376762.0
 Viana do Castelo,2020,1,31313.0
 Viana do Castelo,2020,2,40354.0
 Viana do Castelo,2020,3,15337.0
@@ -1324,7 +1340,8 @@ Viana do Castelo,2026,2,42860.0
 Viana do Castelo,2026,3,56247.0
 Viana do Castelo,2026,4,90231.0
 Viana do Castelo,2026,5,106089.0
-Viana do Castelo,2026,6,111383.0
+Viana do Castelo,2026,6,111517.0
+Viana do Castelo,2026,7,145454.0
 Vila Real,2020,1,22815.0
 Vila Real,2020,2,28733.0
 Vila Real,2020,3,9562.0
@@ -1402,7 +1419,8 @@ Vila Real,2026,2,34679.0
 Vila Real,2026,3,44020.0
 Vila Real,2026,4,61443.0
 Vila Real,2026,5,70094.0
-Vila Real,2026,6,71471.0
+Vila Real,2026,6,71580.0
+Vila Real,2026,7,80212.0
 Viseu,2020,1,36359.0
 Viseu,2020,2,50643.0
 Viseu,2020,3,20401.0
@@ -1480,7 +1498,8 @@ Viseu,2026,2,50878.0
 Viseu,2026,3,65255.0
 Viseu,2026,4,85452.0
 Viseu,2026,5,95959.0
-Viseu,2026,6,104113.0
+Viseu,2026,6,106624.0
+Viseu,2026,7,110312.0
 Évora,2020,1,46536.0
 Évora,2020,2,55144.0
 Évora,2020,3,20054.0
@@ -1558,4 +1577,5 @@ Viseu,2026,6,104113.0
 Évora,2026,3,72784.0
 Évora,2026,4,97175.0
 Évora,2026,5,103707.0
-Évora,2026,6,100228.0
+Évora,2026,6,99969.0
+Évora,2026,7,113723.0
