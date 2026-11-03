@@ -17,33 +17,31 @@ DIAS_SEMANA_PT = {
 
 
 def calcular_wknd_code(df):
-    """Numera sequencialmente os fins de semana de cada ano (Sáb+Dom = mesmo número)."""
-    weekday = df["Data"].dt.weekday  # segunda=0 ... domingo=6
+    """Numera sequencialmente os fins de semana de cada ano (Sab+Dom = mesmo numero)."""
+    datas = pd.to_datetime(df["Data"])
 
-    sabados = (
-        df.loc[weekday == 5, ["Data"]]
-        .drop_duplicates()
-        .sort_values("Data")
-        .copy()
-    )
+    # Para cada linha de fim de semana, calcula a data do sabado correspondente.
+    # Sabado -> mesma data; domingo -> dia anterior; dias de semana -> NaT.
+    weekday = datas.dt.weekday
+    data_sabado = datas.where(weekday == 5)
+    data_sabado = data_sabado.mask(weekday == 6, datas - pd.Timedelta(days=1))
 
-    sabados["Ano"] = sabados["Data"].dt.year
-    sabados["Wknd Code"] = sabados.groupby("Ano").cumcount() + 1
+    # Cria uma tabela independente de sabados e atribui um numero sequencial por ano.
+    sabados = pd.Series(data_sabado.dropna().unique())
+    if sabados.empty:
+        return pd.Series(pd.NA, index=df.index, dtype="Int64")
 
-    mapa = dict(zip(sabados["Data"], sabados["Wknd Code"]))
+    sabados = pd.to_datetime(sabados).sort_values().reset_index(drop=True)
+    tabela = pd.DataFrame({"DataSabado": sabados})
+    tabela["Ano"] = tabela["DataSabado"].dt.year
+    tabela["Wknd Code"] = tabela.groupby("Ano").cumcount() + 1
 
-    # Sábados recebem o código diretamente.
-    wknd_code = df["Data"].map(mapa)
+    mapa = tabela.set_index("DataSabado")["Wknd Code"]
 
-    # Domingos recebem o código do sábado anterior.
-    # O .loc explícito evita ambiguidades de alinhamento/indexação no pandas.
-    domingos_mask = weekday == 6
-    datas_sabado_anterior = df["Data"] - pd.Timedelta(days=1)
-    wknd_code.loc[domingos_mask] = (
-        datas_sabado_anterior.loc[domingos_mask].map(mapa)
-    )
-
-    return wknd_code
+    # Um unico map, sem atribuicao booleana dentro de Series.
+    # Isso evita o erro 'setting an array element with a sequence'.
+    resultado = data_sabado.map(mapa)
+    return resultado.astype("Int64")
 
 
 @st.cache_data(ttl=3600)
@@ -52,7 +50,7 @@ def carregar_dados():
     df["Ano"] = df["Data"].dt.year
     df["Mes"] = df["Data"].dt.month
     df["Dia"] = df["Data"].dt.day
-    df["Dia do Ano"] = df["Data"].dt.dayofyear  # equivalente ao "Dia Seguido"
+    df["Dia do Ano"] = df["Data"].dt.dayofyear
     df["Estação"] = df["Mes"].map(ESTACAO)
     df["Dia da Semana"] = df["Data"].dt.weekday.map(DIAS_SEMANA_PT)
     df["FDS"] = df["Data"].dt.weekday.apply(
